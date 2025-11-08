@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+        @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Changa:wght@400;600;700&family=Raleway:wght@400;700&display=swap);
+* {transition: 0.33s ease;}
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #E4E9E9; 
+            font-family: "Tajawal", "Raleway", sans-serif;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .menu-container {
+            z-index: 100;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 60px;
+            width: 60px;
+            transition: 0.33s ease, height 0.33s 0.33s ease;
+        }
+        
+        .menu-thing {
+            position: absolute;
+            height: 60px;
+            width: 200px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            top: 60px;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 2px 5px 8px -1px rgba(0,0,0,0.4);
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.33s ease, visibility 0.33s ease, transform 0.33s ease;
+            font-family: "Tajawal", sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 0 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            user-select: none;
+        }
+        .menu-thing:active {
+            transform: translateX(-50%) translateY(0) scale(0.95);
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing:active {
+            transform: translateX(-50%) translateY(0) scale(0.95);
+        }
+        .menu-thing:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        .menu-thing i {
+            font-size: 20px;
+            margin-right: 8px;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 4px;
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            vertical-align: middle;
+        }
+        .menu-thing.one {
+            top: 60px;
+            background-color: #3EB890;
+        }
+        .menu-thing.two {
+            top: 120px;
+            background-color: #70CADB;
+        }
+        .menu-thing.three {
+            top: 180px;
+            background-color: #D2B48C;
+        }
+        .menu-thing.four {
+            top: 300px;
+            background-color: #8B5CF6;
+        }
+        .menu-thing.five {
+            top: 240px;
+            background-color: #FEF3C7;
+        }
+        .menu-thing:hover {
+            width: 220px;
+        }
+        
+        .menu-label {
+            position: absolute;
+            height: 60px;
+            width: 60px;
+            top: 0;
+            left: 0;
+            background-color: #443642;
+            box-shadow: 2px 5px 8px -1px rgba(0,0,0,0.4);
+            cursor: pointer;
+        }
+        .menu-label:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        .menu-label:before {
+            display: none;
+        }
+        .menu-label:after {
+            display: none;
+        }
+        
+        .white-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 2px;
+            width: 70%;
+            background-color: white;
+        }
+        .white-line:before,
+        .white-line:after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 60%;
+            background-color: white;
+            transition: 0.2s ease;
+        }
+        .white-line:before {
+            top: -7px;
+        }
+        .white-line:after {
+            top: 8px;
+        }
+        
+        #menuCheckbox {
+            display: none;
+        }
+        #menuCheckbox:checked ~ .menu-container {
+            height: 360px;
+            transition: 0.33s ease;
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing.one {
+            transition: opacity 0.33s 0.33s ease, visibility 0.33s 0.33s ease, transform 0.33s 0.33s ease;
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing.two {
+            transition: opacity 0.33s 0.43s ease, visibility 0.33s 0.43s ease, transform 0.33s 0.43s ease;
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing.three {
+            transition: opacity 0.33s 0.53s ease, visibility 0.33s 0.53s ease, transform 0.33s 0.53s ease;
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing.four {
+            transition: opacity 0.33s 0.73s ease, visibility 0.33s 0.73s ease, transform 0.33s 0.73s ease;
+        }
+        #menuCheckbox:checked ~ .menu-container .menu-thing.five {
+            transition: opacity 0.33s 0.63s ease, visibility 0.33s 0.63s ease, transform 0.33s 0.63s ease;
+        }
+        
+        .email-icon {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(68, 54, 66, 0.9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 2px 5px 8px -1px rgba(0,0,0,0.4);
+            text-decoration: none;
+            z-index: 99;
+        }
+        .email-icon:hover {
+            transform: scale(1.1);
+            background-color: #EA4335;
+        }
+        .email-icon:active {
+            transform: scale(0.95);
+        }
+        .email-icon:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        
+        /* Click outside overlay to close menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            z-index: 98;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #menuCheckbox:checked ~ .menu-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .whoa {
+            animation: colors 1.5s infinite linear;
+        }
+    
+@keyframes colors {
+            0%   {background-color: #3EB890;}
+            25%  {background-color: #D2B48C;}
+            50%  {background-color: #70CADB;}
+            75%  {background-color: #8B5CF6;}
+            100% {background-color: #3EB890;}
+        }
+        
+        /* Responsive Design */
+        /* Tablet */
+        @media screen and (max-width: 768px) {
+            .menu-thing {
+                width: 180px;
+                font-size: 15px;
+                padding: 0 12px;
+            }
+            .menu-thing:hover {
+                width: 200px;
+            }
+        }
+        
+        /* Mobile */
+        @media screen and (max-width: 480px) {
+            .menu-container {
+                height: 50px;
+                width: 50px;
+            }
+            
+            .menu-label {
+                height: 50px;
+                width: 50px;
+            }
+            
+            .menu-thing {
+                width: 160px;
+                height: 50px;
+                font-size: 13px;
+                padding: 0 10px;
+                gap: 8px;
+            }
+            .menu-thing i {
+                font-size: 16px;
+                width: 20px;
+                height: 20px;
+                padding: 3px;
+            }
+            .menu-thing:hover {
+                width: 180px;
+            }
+            .menu-thing.one {
+                top: 50px;
+            }
+            .menu-thing.two {
+                top: 100px;
+            }
+            .menu-thing.three {
+                top: 150px;
+            }
+            .menu-thing.four {
+                top: 250px;
+            }
+            .menu-thing.five {
+                top: 200px;
+            }
+            
+            #menuCheckbox:checked ~ .menu-container {
+                height: 300px;
+            }
+            
+            .email-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                left: 15px;
+                bottom: 15px;
+            }
+        }
+        
+        /* Small Mobile */
+        @media screen and (max-width: 360px) {
+            .menu-thing {
+                width: 140px;
+                font-size: 12px;
+            }
+            .menu-thing:hover {
+                width: 160px;
+            }
+            
+            .menu-thing i {
+                font-size: 14px;
+                width: 18px;
+                height: 18px;
+                padding: 2px;
+            }
+            
+            .email-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                left: 10px;
+                bottom: 10px;
+            }
+}
+</style>
+</head>
+<body>
+    <input type="checkbox" id="menuCheckbox"/>
+    <label for="menuCheckbox" class="menu-overlay"></label>
+    <div class="menu-container">
+        <label class="menu-label" for="menuCheckbox" tabindex="0">
+            <div class="white-line"></div>
+        </label>
+        <div class="menu-thing side one"><i class="fas fa-book-quran"></i> القران الكريم</div>
+        <div class="menu-thing side two"><i class="fas fa-calendar-day"></i> الورد اليومي</div>
+        <div class="menu-thing side three"><i class="fas fa-hands-praying"></i> الاذكار</div>
+        <div class="menu-thing side five"><i class="fas fa-star-and-crescent"></i> العقيدة</div>
+        <div class="menu-thing side four"><i class="fas fa-shield-halved"></i> محاربة التشيع السني</div>
+    </div>
+    <a href="mailto:your.email@example.com" class="email-icon" title="Contact Us">
+        <i class="fas fa-envelope"></i>
+    </a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Colors provided by Slack
+
+$(document).ready(function(){
+    
+    // First body background color changing function
+    /*
+    $('.menu-thing').click(function(){
+        if ($(this).hasClass('one')){
+            $('body').css('background-color', '#3EB890');
+        } else if ($(this).hasClass('two')) {
+            $('body').css('background-color', '#70CADB');
+        } else if ($(this).hasClass('three')) {
+            $('body').css('background-color', '#D2B48C');
+        } else if ($(this).hasClass('four')) {
+            $('body').css('background-color', '#8B5CF6');
+        } else if ($(this).hasClass('five')) {
+            $('body').css('background-color', '#FEF3C7');
+        } 
+        return false;
+    });
+    */
+    
+    // better body background color changing function with navigation
+    $('.menu-thing').click(function(){
+        $('body').removeClass('whoa'); 
+        
+        // Navigation for specific menu items
+        if ($(this).hasClass('five')) {
+            // Navigate to العقيدة page
+            window.location.href = 'Aqqida/imag.html';
+            return false;
+        } else if ($(this).hasClass('two')) {
+            // Navigate to الورد اليومي page
+            window.location.href = 'werd/index.html';
+            return false;
+        } else if ($(this).hasClass('four')) {
+            // Navigate to محاربة التشيع السني page
+            window.location.href = 'shisim/index.html';
+            return false;
+        }
+        
+        // For other items, change background color
+        $('body').css('background-color', $(this).css('background-color')); 
+        // Close menu after selection
+        $('#menuCheckbox').prop('checked', false);
+        return false;
+    });
+    
+            // Close menu when clicking outside
+            $('.menu-overlay').click(function(){
+                $('#menuCheckbox').prop('checked', false);
+            });
+            
+            // Close menu on Escape key
+            $(document).keydown(function(e) {
+                if (e.key === "Escape" || e.keyCode === 27) {
+                    $('#menuCheckbox').prop('checked', false);
+                }
+            });
+            
+            // Add keyboard navigation support
+            $('.menu-label').keydown(function(e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    $('#menuCheckbox').prop('checked', !$('#menuCheckbox').prop('checked'));
+                }
+            });
+            
+            
+});
+</script>
+</body>
+</html>
