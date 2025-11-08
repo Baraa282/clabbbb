@@ -68,23 +68,25 @@
         }
         
         .slideshow-container {
-            max-width: 1200px;
-            margin: 40px auto;
+            max-width: 98%;
+            margin: 20px auto;
             position: relative;
-            background: rgba(248, 250, 249, 0.1);
+            background: transparent;
             border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 0;
         }
         
         .slide-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 75%; /* 4:3 aspect ratio */
+            min-height: 90vh;
             overflow: hidden;
-            border-radius: 15px;
-            background: #2F362F;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .slide {
@@ -98,6 +100,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
         .slide.active {
@@ -105,107 +108,77 @@
         }
         
         .slide img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
-            border-radius: 15px;
+            border-radius: 10px;
+            cursor: zoom-in;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+        
+        .slide img.fullscreen {
+            max-width: 96vw;
+            max-height: 96vh;
+            cursor: zoom-out;
+            z-index: 100;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8);
         }
         
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(248, 250, 249, 0.9);
+            background: rgba(248, 250, 249, 0.95);
             color: #2F362F;
-            border: none;
-            width: 50px;
-            height: 50px;
+            border: 2px solid rgba(248, 250, 249, 0.3);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 10;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
         }
         
         .nav-btn:hover {
             background: #788978;
             color: #F8FAF9;
-            transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+            border-color: #788978;
         }
         
         .nav-btn.prev {
-            right: 20px;
+            right: 30px;
         }
         
         .nav-btn.next {
-            left: 20px;
+            left: 30px;
         }
         
         .slide-counter {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(47, 54, 47, 0.9);
+            background: rgba(47, 54, 47, 0.95);
             color: #F8FAF9;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 1rem;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 1.1rem;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .thumbnails {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(248, 250, 249, 0.05);
-            border-radius: 15px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .thumbnails::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .thumbnails::-webkit-scrollbar-track {
-            background: rgba(248, 250, 249, 0.1);
-            border-radius: 10px;
-        }
-        
-        .thumbnails::-webkit-scrollbar-thumb {
-            background: #788978;
-            border-radius: 10px;
-        }
-        
-        .thumbnail {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            opacity: 0.6;
-        }
-        
-        .thumbnail:hover {
-            transform: scale(1.1);
-            opacity: 1;
-            border-color: #788978;
-        }
-        
-        .thumbnail.active {
-            opacity: 1;
-            border-color: #D9D3C6;
-            box-shadow: 0 4px 15px rgba(217, 211, 198, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(248, 250, 249, 0.2);
         }
         
         /* Mobile Responsive */
@@ -222,32 +195,35 @@
             }
             
             .slideshow-container {
-                margin: 20px;
-                padding: 10px;
+                margin: 10px;
+                padding: 0;
+                max-width: 98%;
             }
             
             .slide-wrapper {
-                padding-bottom: 100%; /* Square on mobile */
+                min-height: 75vh;
+            }
+            
+            .slide img {
+                max-height: 75vh;
+            }
+            
+            .slide img.fullscreen {
+                max-height: 90vh;
             }
             
             .nav-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
             
             .nav-btn.prev {
-                right: 10px;
+                right: 15px;
             }
             
             .nav-btn.next {
-                left: 10px;
-            }
-            
-            .thumbnails {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-                gap: 8px;
-                max-height: 200px;
+                left: 15px;
             }
         }
         
@@ -258,6 +234,37 @@
             
             .header h1 {
                 font-size: 1.5rem;
+            }
+            
+            .slideshow-container {
+                margin: 5px;
+                padding: 0;
+            }
+            
+            .slide-wrapper {
+                min-height: 70vh;
+            }
+            
+            .slide img {
+                max-height: 70vh;
+            }
+            
+            .slide img.fullscreen {
+                max-height: 95vh;
+            }
+            
+            .nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .nav-btn.prev {
+                right: 10px;
+            }
+            
+            .nav-btn.next {
+                left: 10px;
             }
             
             .slide-counter {
@@ -291,17 +298,14 @@
                 <span id="current-slide">1</span> / <span id="total-slides">50</span>
             </div>
         </div>
-        
-        <div class="thumbnails" id="thumbnails-container"></div>
     </div>
     
     <script>
         let currentSlide = 0;
         const totalSlides = 50;
         const slides = [];
-        const thumbnails = [];
         
-        // Create slides and thumbnails
+        // Create slides
         for (let i = 1; i <= totalSlides; i++) {
             const slide = document.createElement('div');
             slide.className = 'slide';
@@ -311,43 +315,28 @@
             img.src = `${i}.jpg`;
             img.alt = `صورة ${i}`;
             img.loading = i <= 3 ? 'eager' : 'lazy';
+            img.onclick = function() {
+                this.classList.toggle('fullscreen');
+            };
             
             slide.appendChild(img);
             slides.push(slide);
-            
-            const thumbnail = document.createElement('img');
-            thumbnail.className = 'thumbnail';
-            if (i === 1) thumbnail.classList.add('active');
-            thumbnail.src = `${i}.jpg`;
-            thumbnail.alt = `صورة ${i}`;
-            thumbnail.onclick = () => goToSlide(i - 1);
-            thumbnails.push(thumbnail);
         }
         
         document.getElementById('slides-container').append(...slides);
-        document.getElementById('thumbnails-container').append(...thumbnails);
         document.getElementById('total-slides').textContent = totalSlides;
         
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
-            thumbnails[currentSlide].classList.remove('active');
             
             currentSlide = (n + totalSlides) % totalSlides;
             
             slides[currentSlide].classList.add('active');
-            thumbnails[currentSlide].classList.add('active');
             document.getElementById('current-slide').textContent = currentSlide + 1;
-            
-            // Scroll thumbnail into view
-            thumbnails[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
         
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
-        }
-        
-        function goToSlide(index) {
-            showSlide(index);
         }
         
         // Keyboard navigation
