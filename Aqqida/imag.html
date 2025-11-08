@@ -327,10 +327,17 @@
         document.getElementById('total-slides').textContent = totalSlides;
         
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
+            // Remove active class and reset zoom on current slide
+            const currentSlideElement = slides[currentSlide];
+            currentSlideElement.classList.remove('active');
+            const currentImg = currentSlideElement.querySelector('img');
+            if (currentImg && currentImg.classList.contains('fullscreen')) {
+                currentImg.classList.remove('fullscreen');
+            }
             
             currentSlide = (n + totalSlides) % totalSlides;
             
+            // Show new slide
             slides[currentSlide].classList.add('active');
             document.getElementById('current-slide').textContent = currentSlide + 1;
         }
