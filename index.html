@@ -60,6 +60,22 @@
             gap: 10px;
             user-select: none;
         }
+        /* Optimal font colors for each menu item based on background */
+        .menu-thing.one {
+            color: #FFFFFF;
+        }
+        .menu-thing.two {
+            color: #2C3E50;
+        }
+        .menu-thing.three {
+            color: #1A1A1A;
+        }
+        .menu-thing.four {
+            color: #FFFFFF;
+        }
+        .menu-thing.five {
+            color: #FFFFFF;
+        }
         .menu-thing:active {
             transform: translateX(-50%) translateY(0) scale(0.95);
         }
@@ -87,29 +103,63 @@
             backdrop-filter: blur(5px);
             vertical-align: middle;
         }
+        /* Icon background colors for better contrast */
+        .menu-thing.two i,
+        .menu-thing.three i {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Individual size controls for each menu item */
         .menu-thing.one {
             top: 60px;
-            background-color: #3EB890;
+            background-color: #788978;
+            width: 200px;  /* Change this to adjust width */
+            height: 60px;  /* Change this to adjust height */
+            font-size: 16px;  /* Change this to adjust text size */
         }
         .menu-thing.two {
             top: 120px;
-            background-color: #70CADB;
+            background-color: #D9D3C6;
+            width: 200px;  /* Change this to adjust width */
+            height: 60px;  /* Change this to adjust height */
+            font-size: 16px;  /* Change this to adjust text size */
         }
         .menu-thing.three {
             top: 180px;
-            background-color: #D2B48C;
+            background-color: #F8FAF9;
+            width: 200px;  /* Change this to adjust width */
+            height: 60px;  /* Change this to adjust height */
+            font-size: 16px;  /* Change this to adjust text size */
         }
         .menu-thing.four {
             top: 300px;
-            background-color: #8B5CF6;
+            background-color: #9D9D9D;
+            width: 200px;  /* Change this to adjust width */
+            height: 60px;  /* Change this to adjust height */
+            font-size: 16px;  /* Change this to adjust text size */
         }
         .menu-thing.five {
             top: 240px;
-            background-color: #FEF3C7;
+            background-color: #2F362F;
+            width: 200px;  /* Change this to adjust width */
+            height: 60px;  /* Change this to adjust height */
+            font-size: 16px;  /* Change this to adjust text size */
         }
+        /* Hover width - you can customize per item if needed */
         .menu-thing:hover {
-            width: 220px;
+            width: 220px;  /* Default hover width - can be overridden per item */
         }
+        /* Individual hover sizes (optional - uncomment to use) */
+        /*
+        .menu-thing.one:hover { width: 220px; }
+        .menu-thing.two:hover { width: 230px; }
+        .menu-thing.three:hover { width: 210px; }
+        .menu-thing.four:hover { width: 220px; }
+        .menu-thing.five:hover { width: 220px; }
+        */
         
         .menu-label {
             position: absolute;
@@ -352,7 +402,7 @@
         </label>
         <div class="menu-thing side one"><i class="fas fa-book-quran"></i> القران الكريم</div>
         <div class="menu-thing side two"><i class="fas fa-calendar-day"></i> الورد اليومي</div>
-        <div class="menu-thing side three"><i class="fas fa-hands-praying"></i> الاذكار</div>
+        <div class="menu-thing side three"><i class="fas fa-hands-praying"></i> الأدعية</div>
         <div class="menu-thing side five"><i class="fas fa-star-and-crescent"></i> العقيدة</div>
         <div class="menu-thing side four"><i class="fas fa-shield-halved"></i> محاربة التشيع السني</div>
     </div>
@@ -388,23 +438,41 @@ $(document).ready(function(){
     $('.menu-thing').click(function(){
         $('body').removeClass('whoa'); 
         
+        // Change background color to match menu item color
+        var bgColor = $(this).css('background-color');
+        $('body').css('background-color', bgColor);
+        
         // Navigation for specific menu items
-        if ($(this).hasClass('five')) {
+        if ($(this).hasClass('one')) {
+            // Navigate to القران الكريم page
+            setTimeout(function() {
+                window.location.href = 'https://qurannewversion-m03n0ldf7-baraafaezali-2561s-projects.vercel.app/';
+            }, 100);
+            return false;
+        } else if ($(this).hasClass('three')) {
+            // Navigate to الأدعية page
+            setTimeout(function() {
+                window.location.href = 'adhkar/index.html';
+            }, 100);
+            return false;
+        } else if ($(this).hasClass('five')) {
             // Navigate to العقيدة page
-            window.location.href = 'Aqqida/imag.html';
+            setTimeout(function() {
+                window.location.href = 'Aqqida/imag.html';
+            }, 100);
             return false;
         } else if ($(this).hasClass('two')) {
-            // Navigate to الورد اليومي page
-            window.location.href = 'werd/index.html';
+            setTimeout(function() {
+                window.location.href = 'werd/index.html';
+            }, 100);
             return false;
         } else if ($(this).hasClass('four')) {
-            // Navigate to محاربة التشيع السني page
-            window.location.href = 'shisim/index.html';
+            setTimeout(function() {
+                window.location.href = 'shisim/index.html';
+            }, 100);
             return false;
         }
         
-        // For other items, change background color
-        $('body').css('background-color', $(this).css('background-color')); 
         // Close menu after selection
         $('#menuCheckbox').prop('checked', false);
         return false;
