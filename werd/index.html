@@ -115,6 +115,7 @@
             direction: rtl;
             text-align: center;
             position: relative;
+            overflow: visible;
         }
 
         @media (max-width: 768px) {
@@ -129,7 +130,8 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                overflow: hidden;
+                overflow: visible;
+                position: relative;
             }
         }
 
@@ -266,16 +268,113 @@
 
         @media (max-width: 768px) {
             .zoom-controls {
-                top: 10px;
-                left: 10px;
-                gap: 8px;
+                display: none;
             }
 
-            .zoom-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
+            .mark-read-btn {
+                display: none;
             }
+        }
+
+        /* Floating Action Button (FAB) for mobile */
+        .fab-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .fab-container {
+                display: block;
+            }
+        }
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        .fab-main.active {
+            background: #e74c3c;
+            transform: rotate(45deg);
+        }
+
+        .fab-menu {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .fab-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .fab-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .fab-zoom-in {
+            background: #2ecc71;
+        }
+
+        .fab-zoom-out {
+            background: #f39c12;
+        }
+
+        .fab-mark {
+            background: #27ae60;
+        }
+
+        .fab-mark.unmarked {
+            background: #e74c3c;
         }
 
         #page-content {
@@ -296,11 +395,6 @@
             
             .modal {
                 background: rgba(0,0,0,0.9);
-            }
-
-            .modal-content {
-                font-size: 22px;
-                overflow: hidden;
             }
             
             .surah-title {
@@ -348,6 +442,16 @@
             </div>
             <div id="page-content"></div>
             <button class="mark-read-btn" id="markBtn" onclick="togglePageMark()" title="تمت القراءة">✓</button>
+            
+            <!-- Floating Action Button for Mobile -->
+            <div class="fab-container" id="fabContainer">
+                <div class="fab-menu" id="fabMenu">
+                    <button class="fab-btn fab-zoom-in" onclick="zoomIn()" title="تكبير">+</button>
+                    <button class="fab-btn fab-zoom-out" onclick="zoomOut()" title="تصغير">−</button>
+                    <button class="fab-btn fab-mark" id="fabMarkBtn" onclick="togglePageMark()" title="تمت القراءة">✓</button>
+                </div>
+                <button class="fab-main" id="fabMain" onclick="toggleFab()">☰</button>
+            </div>
         </div>
     </div>
 
@@ -402,6 +506,14 @@
                 currentZoom = 1;
                 updateZoom();
                 updateMarkButton();
+                updateFabMarkButton();
+                // Show FAB when modal opens (on mobile)
+                const fabContainer = document.getElementById('fabContainer');
+                if (window.innerWidth <= 768 && fabContainer) {
+                    fabContainer.style.display = 'block';
+                } else if (fabContainer) {
+                    fabContainer.style.display = 'none';
+                }
             };
             
             // Handle image error
@@ -424,6 +536,7 @@
             localStorage.setItem('readPages', JSON.stringify(readPages));
             createCalendar();
             updateMarkButton();
+            updateFabMarkButton();
             closeModal();
             updateProgress();
         }
@@ -438,10 +551,54 @@
             btn.classList.toggle('unmark-btn', isRead);
         }
 
+        function updateFabMarkButton() {
+            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
+            const fabBtn = document.getElementById('fabMarkBtn');
+            if (!fabBtn) return;
+            
+            const isRead = readPages.includes(currentPage);
+            fabBtn.textContent = isRead ? '✗' : '✓';
+            fabBtn.title = isRead ? 'إلغاء التمييز' : 'تمت القراءة';
+            fabBtn.classList.toggle('unmarked', isRead);
+        }
+
+        function toggleFab() {
+            const fabMain = document.getElementById('fabMain');
+            const fabMenu = document.getElementById('fabMenu');
+            
+            fabMain.classList.toggle('active');
+            fabMenu.classList.toggle('active');
+        }
+
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
             currentZoom = 1;
+            // Close FAB menu when modal closes
+            const fabMain = document.getElementById('fabMain');
+            const fabMenu = document.getElementById('fabMenu');
+            const fabContainer = document.getElementById('fabContainer');
+            if (fabMain && fabMenu) {
+                fabMain.classList.remove('active');
+                fabMenu.classList.remove('active');
+            }
+            // Hide FAB when modal closes
+            if (fabContainer) {
+                fabContainer.style.display = 'none';
+            }
         }
+
+        // Handle window resize to show/hide FAB
+        window.addEventListener('resize', function() {
+            const modal = document.getElementById('modal');
+            const fabContainer = document.getElementById('fabContainer');
+            if (modal && fabContainer) {
+                if (modal.style.display === 'flex' && window.innerWidth <= 768) {
+                    fabContainer.style.display = 'block';
+                } else {
+                    fabContainer.style.display = 'none';
+                }
+            }
+        });
 
         function zoomIn() {
             if (currentZoom < MAX_ZOOM) {
@@ -534,7 +691,7 @@
         window.onclick = function(event) {
             const modal = document.getElementById('modal');
             if (event.target === modal) {
-                modal.style.display = 'none';
+                closeModal();
             }
         }
 
