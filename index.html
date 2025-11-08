@@ -8,6 +8,7 @@
 <style>
         @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Changa:wght@400;600;700&family=Raleway:wght@400;700&display=swap);
         @import url('https://fonts.googleapis.com/css2?family=Almawadah&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap');
 * {transition: none;}
         html {
             scroll-behavior: smooth;
@@ -19,7 +20,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            font-family: "Almawadah", "Tajawal", "Raleway", sans-serif;
+            font-family: "Amiri", "Cairo", "Tajawal", "Raleway", sans-serif;
             opacity: 0;
             animation: fadeIn 0.5s ease-in forwards;
         }
@@ -39,8 +40,8 @@
         
         .menu-thing {
             position: absolute;
-            height: 60px;
-            width: 200px;
+            height: 70px;
+            width: 230px;
             left: 50%;
             transform: translateX(-50%) translateY(-20px);
             top: 60px;
@@ -50,8 +51,8 @@
             color: white;
             text-align: center;
             cursor: pointer;
-            font-family: "Almawadah", "Tajawal", sans-serif;
-            font-size: 16px;
+            font-family: "Amiri", "Cairo", "Tajawal", sans-serif;
+            font-size: 18px;
             font-weight: 600;
             padding: 0 15px;
             white-space: nowrap;
@@ -65,6 +66,7 @@
             user-select: none;
             transition: none !important;
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
         /* Optimal font colors for each menu item based on background */
         .menu-thing.one {
@@ -93,25 +95,13 @@
             transform: translateX(-50%) translateY(0) scale(1) !important;
         }
         .menu-thing.one:active,
-        .menu-thing.one:hover {
-            width: 230px !important;
-            height: 70px !important;
-        }
+        .menu-thing.one:hover,
         .menu-thing.two:active,
-        .menu-thing.two:hover {
-            width: 230px !important;
-            height: 70px !important;
-        }
+        .menu-thing.two:hover,
         .menu-thing.three:active,
-        .menu-thing.three:hover {
-            width: 230px !important;
-            height: 70px !important;
-        }
+        .menu-thing.three:hover,
         .menu-thing.four:active,
-        .menu-thing.four:hover {
-            width: 230px !important;
-            height: 70px !important;
-        }
+        .menu-thing.four:hover,
         .menu-thing.five:active,
         .menu-thing.five:hover {
             width: 230px !important;
@@ -314,9 +304,10 @@
         /* Tablet */
         @media screen and (max-width: 768px) {
             .menu-thing {
-                width: 180px;
-                font-size: 15px;
-                padding: 0 12px;
+                width: 230px;
+                height: 70px;
+                font-size: 18px;
+                padding: 0 15px;
             }
             .menu-thing.one,
             .menu-thing.two,
@@ -342,11 +333,11 @@
             }
             
             .menu-thing {
-                width: 160px;
-                height: 50px;
-                font-size: 13px;
-                padding: 0 10px;
-                gap: 8px;
+                width: 230px;
+                height: 70px;
+                font-size: 18px;
+                padding: 0 15px;
+                gap: 10px;
             }
             .menu-thing.one,
             .menu-thing.two,
@@ -395,8 +386,9 @@
         /* Small Mobile */
         @media screen and (max-width: 360px) {
             .menu-thing {
-                width: 140px;
-                font-size: 12px;
+                width: 230px;
+                height: 70px;
+                font-size: 18px;
             }
             .menu-thing.one,
             .menu-thing.two,

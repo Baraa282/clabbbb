@@ -1,703 +1,492 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قرآن كريم - صفحات المصحف</title>
+    <title>الورد اليومي - Daily Recitation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap');
+        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
         }
-
+        
         body {
-            background: #f0f2f5;
+            font-family: "Amiri", "Cairo", sans-serif;
+            background: linear-gradient(135deg, #F8FAF9 0%, #D9D3C6 100%);
+            color: #2F362F;
+            min-height: 100vh;
             padding: 20px;
         }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
+        
+        .header {
+            background: linear-gradient(135deg, #2F362F 0%, #788978 100%);
+            color: #F8FAF9;
+            padding: 25px;
             text-align: center;
-            color: #2c3e50;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 10px;
-            font-family: 'Amiri', serif;
         }
-
-        .progress-bar {
-            width: 100%;
-            max-width: 600px;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin: 0 auto 20px;
-            overflow: hidden;
+        
+        .back-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(248, 250, 249, 0.2);
+            color: #F8FAF9;
+            border: 2px solid rgba(248, 250, 249, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
         }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #2ecc71, #27ae60);
-            transition: width 0.3s ease;
-            border-radius: 10px;
+        
+        .back-btn:hover {
+            background: rgba(248, 250, 249, 0.3);
+            transform: scale(1.05);
         }
-
-        .progress-text {
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
             text-align: center;
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 14px;
         }
-
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #D9D3C6;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .calendar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #F8FAF9;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
         }
-
-        .page-number {
-            background: #fff;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
+        
+        .day-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #D9D3C6 0%, #F8FAF9 100%);
+            border: 2px solid #788978;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
-            color: #3498db;
+            position: relative;
+            overflow: hidden;
         }
-
-        .page-number:hover {
-            background: #3498db;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        
+        .day-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(47, 54, 47, 0.3);
+            border-color: #2F362F;
         }
-
-        .read-page {
-            background: #2ecc71 !important;
-            color: white !important;
-            border-color: #27ae60 !important;
+        
+        .day-card.read {
+            background: linear-gradient(135deg, #788978 0%, #2F362F 100%);
+            color: #F8FAF9;
+            border-color: #788978;
         }
-
-        .modal {
+        
+        .day-card.read::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 1.2rem;
+            color: #D9D3C6;
+        }
+        
+        .day-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2F362F;
+        }
+        
+        .day-card.read .day-number {
+            color: #F8FAF9;
+        }
+        
+        .day-label {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+        
+        /* Full-screen reading mode */
+        .reading-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
+            background: #2F362F;
             z-index: 1000;
+            overflow: hidden;
         }
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            width: 95%;
-            max-width: 1000px;
-            max-height: 95vh;
-            overflow-y: auto;
-            direction: rtl;
-            text-align: center;
-            position: relative;
-            overflow: visible;
+        
+        .reading-modal.active {
+            display: flex;
+            flex-direction: column;
         }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 100%;
-                height: 100vh;
-                max-width: 100%;
-                max-height: 100vh;
-                padding: 0;
-                border-radius: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                overflow: visible;
-                position: relative;
-            }
+        
+        .reading-header {
+            background: rgba(47, 54, 47, 0.95);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #F8FAF9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-
-        .page-image {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            transform-origin: center center;
+        
+        .reading-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
-
-        @media (max-width: 768px) {
-            .page-image {
-                width: 100%;
-                height: 100vh;
-                object-fit: contain;
-                border-radius: 0;
-                box-shadow: none;
-            }
+        
+        .reading-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
+        
+        .reading-btn {
+            background: #788978;
+            color: #F8FAF9;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 32px;
-            color: #666;
-            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            font-family: "Amiri", "Cairo", sans-serif;
+        }
+        
+        .reading-btn:hover {
+            background: #D9D3C6;
+            color: #2F362F;
+            transform: scale(1.05);
+        }
+        
+        .reading-btn.mark-read {
+            background: #788978;
+        }
+        
+        .reading-btn.mark-read.read {
+            background: #2F362F;
+        }
+        
+        .reading-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
+        }
+        
+        .reading-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-btn {
+            background: transparent;
+            color: #F8FAF9;
+            border: 2px solid #F8FAF9;
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-
-        @media (max-width: 768px) {
-            .close-btn {
-                top: 10px;
-                right: 10px;
-                width: 45px;
-                height: 45px;
-                font-size: 28px;
-                background: rgba(255, 255, 255, 0.95);
-            }
-        }
-
+        
         .close-btn:hover {
-            background: #e74c3c;
-            color: white;
-            transform: scale(1.1);
+            background: #F8FAF9;
+            color: #2F362F;
+            transform: rotate(90deg);
         }
-
-
-        .mark-read-btn {
-            position: absolute;
-            left: 20px;
-            bottom: 20px;
-            background: #2ecc71;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .mark-read-btn:hover {
-            background: #27ae60;
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .mark-read-btn:active {
-            transform: scale(0.95);
-        }
-
-        .unmark-btn {
-            background: #e74c3c !important;
-        }
-
-        .unmark-btn:hover {
-            background: #c0392b !important;
-        }
-
-        .zoom-controls {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .zoom-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: #666;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .zoom-btn:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
-            color: #2c3e50;
-        }
-
-        .zoom-btn:active {
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 768px) {
-            .zoom-controls {
-                display: none;
-            }
-
-            .mark-read-btn {
-                display: none;
-            }
-        }
-
-        /* Floating Action Button (FAB) for mobile */
-        .fab-container {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1001;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .fab-container {
-                display: block;
-            }
-        }
-
-        .fab-main {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #3498db;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .fab-main:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-        }
-
-        .fab-main.active {
-            background: #e74c3c;
-            transform: rotate(45deg);
-        }
-
-        .fab-menu {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-        }
-
-        .fab-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .fab-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .fab-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .fab-btn:active {
-            transform: scale(0.95);
-        }
-
-        .fab-zoom-in {
-            background: #2ecc71;
-        }
-
-        .fab-zoom-out {
-            background: #f39c12;
-        }
-
-        .fab-mark {
-            background: #27ae60;
-        }
-
-        .fab-mark.unmarked {
-            background: #e74c3c;
-        }
-
-        #page-content {
-            overflow: auto;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (max-width: 768px) {
-            .page-number {
+        
+        /* Mobile Responsive */
+        @media screen and (max-width: 768px) {
+            body {
                 padding: 10px;
-                font-size: 14px;
             }
             
-            .modal {
-                background: rgba(0,0,0,0.9);
+            .header {
+                padding: 20px 15px;
+                position: relative;
             }
             
-            .surah-title {
-                font-size: 28px;
+            .header h1 {
+                font-size: 1.8rem;
             }
-
-            #page-content {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: auto;
-                -webkit-overflow-scrolling: touch;
+            
+            .back-btn {
+                position: static;
+                margin: 10px auto 0;
+                display: inline-flex;
             }
-
-            .mark-read-btn {
-                left: 10px;
-                bottom: 10px;
-                width: 45px;
-                height: 45px;
-                font-size: 12px;
+            
+            .stats {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .calendar-container {
+                padding: 15px;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 8px;
+            }
+            
+            .day-number {
+                font-size: 1.2rem;
+            }
+            
+            .reading-header {
+                padding: 12px 15px;
+            }
+            
+            .reading-header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .reading-controls {
+                gap: 10px;
+            }
+            
+            .reading-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .calendar-grid {
+                grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+                gap: 6px;
+            }
+            
+            .day-number {
+                font-size: 1rem;
+            }
+            
+            .day-label {
+                font-size: 0.6rem;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Daily Quran Recitation</h1>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-text" id="progressText">0 من 604 صفحة</div>
-        <div class="calendar-grid" id="calendar"></div>
-    </div>
-
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="zoom-controls">
-                <button class="zoom-btn" onclick="zoomIn()" title="تكبير">+</button>
-                <button class="zoom-btn" onclick="zoomOut()" title="تصغير">−</button>
-                <button class="zoom-btn" onclick="resetZoom()" title="إعادة تعيين">⌂</button>
+    <div class="header">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            <span>العودة</span>
+        </a>
+        <h1>الورد اليومي</h1>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="total-days">604</div>
+                <div class="stat-label">إجمالي الأيام</div>
             </div>
-            <div id="page-content"></div>
-            <button class="mark-read-btn" id="markBtn" onclick="togglePageMark()" title="تمت القراءة">✓</button>
-            
-            <!-- Floating Action Button for Mobile -->
-            <div class="fab-container" id="fabContainer">
-                <div class="fab-menu" id="fabMenu">
-                    <button class="fab-btn fab-zoom-in" onclick="zoomIn()" title="تكبير">+</button>
-                    <button class="fab-btn fab-zoom-out" onclick="zoomOut()" title="تصغير">−</button>
-                    <button class="fab-btn fab-mark" id="fabMarkBtn" onclick="togglePageMark()" title="تمت القراءة">✓</button>
-                </div>
-                <button class="fab-main" id="fabMain" onclick="toggleFab()">☰</button>
+            <div class="stat-item">
+                <div class="stat-number" id="read-days">0</div>
+                <div class="stat-label">مقروء</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="remaining-days">604</div>
+                <div class="stat-label">متبقي</div>
             </div>
         </div>
     </div>
-
+    
+    <div class="calendar-container">
+        <div class="calendar-grid" id="calendar-grid"></div>
+    </div>
+    
+    <!-- Full-screen reading modal -->
+    <div class="reading-modal" id="reading-modal">
+        <div class="reading-header">
+            <h2 id="reading-title">اليوم 1</h2>
+            <div class="reading-controls">
+                <button class="reading-btn mark-read" id="mark-read-btn">
+                    <i class="fas fa-check"></i> علامة كمقروء
+                </button>
+                <button class="close-btn" id="close-reading">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="reading-content">
+            <img id="reading-image" src="" alt="">
+        </div>
+    </div>
+    
     <script>
-        let currentPage = null;
-        let currentZoom = 1;
-        const calendar = document.getElementById('calendar');
-        const MIN_ZOOM = 0.5;
-        const MAX_ZOOM = 3;
-        const ZOOM_STEP = 0.25;
-
-        function createCalendar() {
-            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
-            calendar.innerHTML = '';
-            
-            for (let i = 1; i <= 604; i++) {
-                const page = document.createElement('div');
-                page.className = `page-number ${readPages.includes(i) ? 'read-page' : ''}`;
-                page.textContent = i;
-                page.onclick = () => loadPage(i);
-                calendar.appendChild(page);
-            }
-            
-            updateProgress();
-        }
-
-        function updateProgress() {
-            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
-            const progress = (readPages.length / 604) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = `${readPages.length} من 604 صفحة`;
-        }
-
-        function loadPage(pageNumber) {
-            currentPage = pageNumber;
-            
-            // Format page number with leading zeros (001, 002, etc.)
-            const pageNumberFormatted = String(pageNumber).padStart(3, '0');
-            const imagePath = `big-quran/big-quran-${pageNumberFormatted}.jpg`;
-            
-            // Create image element
-            const img = document.createElement('img');
-            img.src = imagePath;
-            img.className = 'page-image';
-            img.alt = `صفحة ${pageNumber}`;
-            
-            // Handle image load
-            img.onload = () => {
-                document.getElementById('page-content').innerHTML = '';
-                document.getElementById('page-content').appendChild(img);
-                document.getElementById('modal').style.display = 'flex';
-                currentZoom = 1;
-                updateZoom();
-                updateMarkButton();
-                updateFabMarkButton();
-                // Show FAB when modal opens (on mobile)
-                const fabContainer = document.getElementById('fabContainer');
-                if (window.innerWidth <= 768 && fabContainer) {
-                    fabContainer.style.display = 'block';
-                } else if (fabContainer) {
-                    fabContainer.style.display = 'none';
-                }
-            };
-            
-            // Handle image error
-            img.onerror = () => {
-                alert('حدث خطأ أثناء تحميل الصفحة');
-                document.getElementById('page-content').innerHTML = '<p style="text-align: center; color: #e74c3c;">حدث خطأ أثناء تحميل الصفحة</p>';
-            };
-        }
-
-        function togglePageMark() {
-            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
-            const index = readPages.indexOf(currentPage);
-            
-            if (index === -1) {
-                readPages.push(currentPage);
-            } else {
-                readPages.splice(index, 1);
-            }
-            
-            localStorage.setItem('readPages', JSON.stringify(readPages));
-            createCalendar();
-            updateMarkButton();
-            updateFabMarkButton();
-            closeModal();
-            updateProgress();
-        }
-
-        function updateMarkButton() {
-            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
-            const btn = document.getElementById('markBtn');
-            const isRead = readPages.includes(currentPage);
-            
-            btn.textContent = isRead ? '✗' : '✓';
-            btn.title = isRead ? 'إلغاء التمييز' : 'تمت القراءة';
-            btn.classList.toggle('unmark-btn', isRead);
-        }
-
-        function updateFabMarkButton() {
-            const readPages = JSON.parse(localStorage.getItem('readPages') || '[]');
-            const fabBtn = document.getElementById('fabMarkBtn');
-            if (!fabBtn) return;
-            
-            const isRead = readPages.includes(currentPage);
-            fabBtn.textContent = isRead ? '✗' : '✓';
-            fabBtn.title = isRead ? 'إلغاء التمييز' : 'تمت القراءة';
-            fabBtn.classList.toggle('unmarked', isRead);
-        }
-
-        function toggleFab() {
-            const fabMain = document.getElementById('fabMain');
-            const fabMenu = document.getElementById('fabMenu');
-            
-            fabMain.classList.toggle('active');
-            fabMenu.classList.toggle('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-            currentZoom = 1;
-            // Close FAB menu when modal closes
-            const fabMain = document.getElementById('fabMain');
-            const fabMenu = document.getElementById('fabMenu');
-            const fabContainer = document.getElementById('fabContainer');
-            if (fabMain && fabMenu) {
-                fabMain.classList.remove('active');
-                fabMenu.classList.remove('active');
-            }
-            // Hide FAB when modal closes
-            if (fabContainer) {
-                fabContainer.style.display = 'none';
-            }
-        }
-
-        // Handle window resize to show/hide FAB
-        window.addEventListener('resize', function() {
-            const modal = document.getElementById('modal');
-            const fabContainer = document.getElementById('fabContainer');
-            if (modal && fabContainer) {
-                if (modal.style.display === 'flex' && window.innerWidth <= 768) {
-                    fabContainer.style.display = 'block';
-                } else {
-                    fabContainer.style.display = 'none';
-                }
-            }
-        });
-
-        function zoomIn() {
-            if (currentZoom < MAX_ZOOM) {
-                currentZoom = Math.min(currentZoom + ZOOM_STEP, MAX_ZOOM);
-                updateZoom();
-            }
-        }
-
-        function zoomOut() {
-            if (currentZoom > MIN_ZOOM) {
-                currentZoom = Math.max(currentZoom - ZOOM_STEP, MIN_ZOOM);
-                updateZoom();
-            }
-        }
-
-        function resetZoom() {
-            currentZoom = 1;
-            updateZoom();
-        }
-
-        function updateZoom() {
-            const img = document.querySelector('.page-image');
-            if (img) {
-                img.style.transform = `scale(${currentZoom})`;
-            }
-        }
-
-        // Keyboard shortcuts for zoom
-        document.addEventListener('keydown', function(e) {
-            const modal = document.getElementById('modal');
-            if (modal.style.display === 'flex') {
-                if (e.key === '+' || e.key === '=') {
-                    e.preventDefault();
-                    zoomIn();
-                } else if (e.key === '-' || e.key === '_') {
-                    e.preventDefault();
-                    zoomOut();
-                } else if (e.key === '0') {
-                    e.preventDefault();
-                    resetZoom();
-                }
-            }
-        });
-
-        // Pinch-to-zoom support for mobile
-        let lastTouchDistance = 0;
-        const pageContent = document.getElementById('page-content');
+        const totalDays = 604;
+        let readDays = JSON.parse(localStorage.getItem('readDays') || '[]');
+        let currentReadingDay = null;
         
-        pageContent.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 2) {
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                lastTouchDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-            }
-        });
-
-        pageContent.addEventListener('touchmove', function(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                const currentDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-
-                if (lastTouchDistance > 0) {
-                    const scale = currentDistance / lastTouchDistance;
-                    const newZoom = currentZoom * scale;
-                    
-                    if (newZoom >= MIN_ZOOM && newZoom <= MAX_ZOOM) {
-                        currentZoom = newZoom;
-                        updateZoom();
-                    }
+        // Initialize calendar
+        function initCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= totalDays; i++) {
+                const dayCard = document.createElement('div');
+                dayCard.className = 'day-card';
+                dayCard.dataset.day = i;
+                
+                if (readDays.includes(i)) {
+                    dayCard.classList.add('read');
                 }
                 
-                lastTouchDistance = currentDistance;
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = i;
+                
+                const dayLabel = document.createElement('div');
+                dayLabel.className = 'day-label';
+                dayLabel.textContent = 'يوم';
+                
+                dayCard.appendChild(dayNumber);
+                dayCard.appendChild(dayLabel);
+                
+                dayCard.addEventListener('click', () => openReading(i));
+                
+                grid.appendChild(dayCard);
             }
-        });
-
-        pageContent.addEventListener('touchend', function(e) {
-            if (e.touches.length < 2) {
-                lastTouchDistance = 0;
+            
+            updateStats();
+        }
+        
+        function updateStats() {
+            const readCount = readDays.length;
+            document.getElementById('read-days').textContent = readCount;
+            document.getElementById('remaining-days').textContent = totalDays - readCount;
+        }
+        
+        function openReading(day) {
+            currentReadingDay = day;
+            const modal = document.getElementById('reading-modal');
+            const image = document.getElementById('reading-image');
+            const title = document.getElementById('reading-title');
+            const markBtn = document.getElementById('mark-read-btn');
+            
+            // Format day number with leading zeros
+            const dayStr = String(day).padStart(3, '0');
+            image.src = `big-quran/big-quran-${dayStr}.jpg`;
+            title.textContent = `اليوم ${day}`;
+            
+            if (readDays.includes(day)) {
+                markBtn.classList.add('read');
+                markBtn.innerHTML = '<i class="fas fa-check-circle"></i> مقروء';
+            } else {
+                markBtn.classList.remove('read');
+                markBtn.innerHTML = '<i class="fas fa-check"></i> علامة كمقروء';
             }
-        });
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('modal');
-            if (event.target === modal) {
-                closeModal();
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeReading() {
+            const modal = document.getElementById('reading-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function toggleRead() {
+            if (!currentReadingDay) return;
+            
+            const index = readDays.indexOf(currentReadingDay);
+            if (index > -1) {
+                readDays.splice(index, 1);
+            } else {
+                readDays.push(currentReadingDay);
+            }
+            
+            localStorage.setItem('readDays', JSON.stringify(readDays));
+            initCalendar();
+            
+            const markBtn = document.getElementById('mark-read-btn');
+            if (readDays.includes(currentReadingDay)) {
+                markBtn.classList.add('read');
+                markBtn.innerHTML = '<i class="fas fa-check-circle"></i> مقروء';
+            } else {
+                markBtn.classList.remove('read');
+                markBtn.innerHTML = '<i class="fas fa-check"></i> علامة كمقروء';
             }
         }
-
-        window.onload = () => {
-            createCalendar();
-        }
+        
+        // Event listeners
+        document.getElementById('close-reading').addEventListener('click', closeReading);
+        document.getElementById('mark-read-btn').addEventListener('click', toggleRead);
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeReading();
+            }
+        });
+        
+        // Initialize
+        initCalendar();
     </script>
 </body>
 </html>
+
