@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>العقيدة - Aqeedah</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -16,77 +18,96 @@
         
         body {
             font-family: "Amiri", "Cairo", sans-serif;
+            background: #2F362F;
+            background: -webkit-linear-gradient(135deg, #2F362F 0%, #788978 100%);
+            background: -moz-linear-gradient(135deg, #2F362F 0%, #788978 100%);
+            background: -o-linear-gradient(135deg, #2F362F 0%, #788978 100%);
             background: linear-gradient(135deg, #2F362F 0%, #788978 100%);
             color: #F8FAF9;
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        
-        .header {
-            background: rgba(47, 54, 47, 0.95);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #F8FAF9;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .back-btn {
-            position: absolute;
+            position: fixed;
+            top: 20px;
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #788978;
+            z-index: 1000;
+            background: rgba(47, 54, 47, 0.9);
             color: #F8FAF9;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            border: 2px solid rgba(248, 250, 249, 0.3);
+            padding: 12px 20px;
+            border-radius: 50px;
             font-size: 1rem;
             cursor: pointer;
             text-decoration: none;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            -ms-flex-align: center;
             align-items: center;
             gap: 8px;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
             font-family: "Amiri", "Cairo", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         .back-btn:hover {
-            background: #D9D3C6;
-            color: #2F362F;
-            transform: translateY(-50%) scale(1.05);
+            background: rgba(120, 137, 120, 0.95);
+            border-color: rgba(248, 250, 249, 0.5);
+            -webkit-transform: scale(1.05);
+            -moz-transform: scale(1.05);
+            -ms-transform: scale(1.05);
+            transform: scale(1.05);
         }
         
         .slideshow-container {
-            max-width: 98%;
-            margin: 20px auto;
-            position: relative;
-            background: transparent;
-            border-radius: 20px;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
             padding: 0;
+            position: relative;
+            background: #2F362F;
+            background: -webkit-linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
+            background: -moz-linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
+            background: -o-linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
+            background: linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
+            overflow: hidden;
         }
         
         .slide-wrapper {
             position: relative;
             width: 100%;
-            min-height: 90vh;
+            height: 100vh;
             overflow: hidden;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #2F362F 0%, #1a1f1a 100%);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-flex-pack: center;
             justify-content: center;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             touch-action: manipulation;
         }
         
@@ -97,9 +118,21 @@
             width: 100%;
             height: 100%;
             opacity: 0;
+            -webkit-transition: opacity 0.6s ease-in-out;
+            -moz-transition: opacity 0.6s ease-in-out;
+            -o-transition: opacity 0.6s ease-in-out;
             transition: opacity 0.6s ease-in-out;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-flex-pack: center;
             justify-content: center;
             padding: 20px;
         }
@@ -109,16 +142,28 @@
         }
         
         .slide img {
-            max-width: 100%;
-            max-height: 90vh;
+            max-width: 95%;
+            max-height: 85vh;
             width: auto;
             height: auto;
+            -o-object-fit: contain;
             object-fit: contain;
             border-radius: 10px;
             cursor: zoom-in;
+            -webkit-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -moz-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -o-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             touch-action: manipulation;
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         
         .slide img.fullscreen {
@@ -133,6 +178,9 @@
         .nav-btn {
             position: absolute;
             top: 50%;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
             transform: translateY(-50%);
             background: rgba(248, 250, 249, 0.95);
             color: #2F362F;
@@ -142,18 +190,35 @@
             border-radius: 50%;
             font-size: 1.8rem;
             cursor: pointer;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-flex-pack: center;
             justify-content: center;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
             z-index: 10;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
+            -webkit-tap-highlight-color: transparent;
         }
         
         .nav-btn:hover {
             background: #788978;
             color: #F8FAF9;
+            -webkit-transform: translateY(-50%) scale(1.15);
+            -moz-transform: translateY(-50%) scale(1.15);
+            -ms-transform: translateY(-50%) scale(1.15);
             transform: translateY(-50%) scale(1.15);
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
             border-color: #788978;
@@ -168,42 +233,32 @@
         }
         
         .slide-counter {
-            position: absolute;
-            bottom: 30px;
+            position: fixed;
+            top: 20px;
             left: 50%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
             transform: translateX(-50%);
-            background: rgba(47, 54, 47, 0.95);
+            z-index: 100;
+            background: rgba(47, 54, 47, 0.9);
             color: #F8FAF9;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
             font-weight: 600;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(248, 250, 249, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         /* Mobile Responsive */
         @media screen and (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
             .back-btn {
-                position: static;
-                transform: none;
-                margin-top: 10px;
-                display: inline-flex;
-            }
-            
-            .slideshow-container {
-                margin: 10px;
-                padding: 0;
-                max-width: 98%;
-            }
-            
-            .slide-wrapper {
-                min-height: 75vh;
+                top: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
             }
             
             .slide img {
@@ -227,24 +282,20 @@
             .nav-btn.next {
                 left: 15px;
             }
+            
+            .slide-counter {
+                top: 15px;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
         }
         
         @media screen and (max-width: 480px) {
-            .header {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .slideshow-container {
-                margin: 5px;
-                padding: 0;
-            }
-            
-            .slide-wrapper {
-                min-height: 70vh;
+            .back-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 14px;
+                font-size: 0.85rem;
             }
             
             .slide img {
@@ -270,20 +321,18 @@
             }
             
             .slide-counter {
-                font-size: 0.9rem;
-                padding: 8px 16px;
+                top: 10px;
+                font-size: 0.85rem;
+                padding: 6px 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="../index.html" class="back-btn">
-            <i class="fas fa-arrow-right"></i>
-            <span>العودة</span>
-        </a>
-        <h1>العقيدة</h1>
-    </div>
+    <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-right"></i>
+        <span>العودة</span>
+    </a>
     
     <div class="slideshow-container">
         <div class="slide-wrapper">
@@ -295,11 +344,11 @@
             </button>
             
             <div id="slides-container"></div>
-            
-            <div class="slide-counter">
-                <span id="current-slide">1</span> / <span id="total-slides">50</span>
-            </div>
         </div>
+    </div>
+    
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">50</span>
     </div>
     
     <script>
@@ -328,6 +377,10 @@
         document.getElementById('slides-container').append(...slides);
         document.getElementById('total-slides').textContent = totalSlides;
         
+        function updateProgress() {
+            // Just update the counter
+        }
+        
         function showSlide(n) {
             // Remove active class and reset zoom on current slide
             const currentSlideElement = slides[currentSlide];
@@ -342,7 +395,11 @@
             // Show new slide
             slides[currentSlide].classList.add('active');
             document.getElementById('current-slide').textContent = currentSlide + 1;
+            updateProgress();
         }
+        
+        // Initialize progress
+        updateProgress();
         
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
