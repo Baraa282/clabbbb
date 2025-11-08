@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
         @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Changa:wght@400;600;700&family=Raleway:wght@400;700&display=swap);
-* {transition: 0.33s ease;}
+        @import url('https://fonts.googleapis.com/css2?family=Almawadah&display=swap');
+* {transition: none;}
         html {
             scroll-behavior: smooth;
         }
         body {
-            background-color: #E4E9E9; 
-            font-family: "Tajawal", "Raleway", sans-serif;
+            background-color: #E4E9E9;
+            background-image: url('6331545.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: "Almawadah", "Tajawal", "Raleway", sans-serif;
             opacity: 0;
             animation: fadeIn 0.5s ease-in forwards;
         }
@@ -29,7 +35,6 @@
             transform: translate(-50%, -50%);
             height: 60px;
             width: 60px;
-            transition: 0.33s ease, height 0.33s 0.33s ease;
         }
         
         .menu-thing {
@@ -45,8 +50,7 @@
             color: white;
             text-align: center;
             cursor: pointer;
-            transition: opacity 0.33s ease, visibility 0.33s ease, transform 0.33s ease;
-            font-family: "Tajawal", sans-serif;
+            font-family: "Almawadah", "Tajawal", sans-serif;
             font-size: 16px;
             font-weight: 600;
             padding: 0 15px;
@@ -59,6 +63,8 @@
             justify-content: center;
             gap: 10px;
             user-select: none;
+            transition: none !important;
+            -webkit-tap-highlight-color: transparent;
         }
         /* Optimal font colors for each menu item based on background */
         .menu-thing.one {
@@ -76,15 +82,40 @@
         .menu-thing.five {
             color: #FFFFFF;
         }
-        .menu-thing:active {
-            transform: translateX(-50%) translateY(0) scale(0.95);
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing:active {
-            transform: translateX(-50%) translateY(0) scale(0.95);
-        }
         .menu-thing:focus {
             outline: 2px solid rgba(255, 255, 255, 0.5);
             outline-offset: 2px;
+        }
+        .menu-thing:active {
+            transform: translateX(-50%) translateY(0) scale(1) !important;
+        }
+        .menu-thing:hover {
+            transform: translateX(-50%) translateY(0) scale(1) !important;
+        }
+        .menu-thing.one:active,
+        .menu-thing.one:hover {
+            width: 230px !important;
+            height: 70px !important;
+        }
+        .menu-thing.two:active,
+        .menu-thing.two:hover {
+            width: 230px !important;
+            height: 70px !important;
+        }
+        .menu-thing.three:active,
+        .menu-thing.three:hover {
+            width: 230px !important;
+            height: 70px !important;
+        }
+        .menu-thing.four:active,
+        .menu-thing.four:hover {
+            width: 230px !important;
+            height: 70px !important;
+        }
+        .menu-thing.five:active,
+        .menu-thing.five:hover {
+            width: 230px !important;
+            height: 70px !important;
         }
         .menu-thing i {
             font-size: 20px;
@@ -103,6 +134,16 @@
             backdrop-filter: blur(5px);
             vertical-align: middle;
         }
+        /* Larger icons for all menu items */
+        .menu-thing.one i,
+        .menu-thing.two i,
+        .menu-thing.three i,
+        .menu-thing.four i,
+        .menu-thing.five i {
+            font-size: 22px;
+            width: 28px;
+            height: 28px;
+        }
         /* Icon background colors for better contrast */
         .menu-thing.two i,
         .menu-thing.three i {
@@ -116,50 +157,38 @@
         .menu-thing.one {
             top: 60px;
             background-color: #788978;
-            width: 200px;  /* Change this to adjust width */
-            height: 60px;  /* Change this to adjust height */
-            font-size: 16px;  /* Change this to adjust text size */
+            width: 230px;  /* Change this to adjust width */
+            height: 70px;  /* Change this to adjust height */
+            font-size: 18px;  /* Change this to adjust text size */
         }
         .menu-thing.two {
             top: 120px;
             background-color: #D9D3C6;
-            width: 200px;  /* Change this to adjust width */
-            height: 60px;  /* Change this to adjust height */
-            font-size: 16px;  /* Change this to adjust text size */
+            width: 230px;  /* Change this to adjust width */
+            height: 70px;  /* Change this to adjust height */
+            font-size: 18px;  /* Change this to adjust text size */
         }
         .menu-thing.three {
             top: 180px;
             background-color: #F8FAF9;
-            width: 200px;  /* Change this to adjust width */
-            height: 60px;  /* Change this to adjust height */
-            font-size: 16px;  /* Change this to adjust text size */
+            width: 230px;  /* Change this to adjust width */
+            height: 70px;  /* Change this to adjust height */
+            font-size: 18px;  /* Change this to adjust text size */
         }
         .menu-thing.four {
             top: 300px;
             background-color: #9D9D9D;
-            width: 200px;  /* Change this to adjust width */
-            height: 60px;  /* Change this to adjust height */
-            font-size: 16px;  /* Change this to adjust text size */
+            width: 230px;  /* Change this to adjust width */
+            height: 70px;  /* Change this to adjust height */
+            font-size: 18px;  /* Change this to adjust text size */
         }
         .menu-thing.five {
             top: 240px;
             background-color: #2F362F;
-            width: 200px;  /* Change this to adjust width */
-            height: 60px;  /* Change this to adjust height */
-            font-size: 16px;  /* Change this to adjust text size */
+            width: 230px;  /* Change this to adjust width */
+            height: 70px;  /* Change this to adjust height */
+            font-size: 18px;  /* Change this to adjust text size */
         }
-        /* Hover width - you can customize per item if needed */
-        .menu-thing:hover {
-            width: 220px;  /* Default hover width - can be overridden per item */
-        }
-        /* Individual hover sizes (optional - uncomment to use) */
-        /*
-        .menu-thing.one:hover { width: 220px; }
-        .menu-thing.two:hover { width: 230px; }
-        .menu-thing.three:hover { width: 210px; }
-        .menu-thing.four:hover { width: 220px; }
-        .menu-thing.five:hover { width: 220px; }
-        */
         
         .menu-label {
             position: absolute;
@@ -212,27 +241,11 @@
         }
         #menuCheckbox:checked ~ .menu-container {
             height: 360px;
-            transition: 0.33s ease;
         }
         #menuCheckbox:checked ~ .menu-container .menu-thing {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing.one {
-            transition: opacity 0.33s 0.33s ease, visibility 0.33s 0.33s ease, transform 0.33s 0.33s ease;
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing.two {
-            transition: opacity 0.33s 0.43s ease, visibility 0.33s 0.43s ease, transform 0.33s 0.43s ease;
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing.three {
-            transition: opacity 0.33s 0.53s ease, visibility 0.33s 0.53s ease, transform 0.33s 0.53s ease;
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing.four {
-            transition: opacity 0.33s 0.73s ease, visibility 0.33s 0.73s ease, transform 0.33s 0.73s ease;
-        }
-        #menuCheckbox:checked ~ .menu-container .menu-thing.five {
-            transition: opacity 0.33s 0.63s ease, visibility 0.33s 0.63s ease, transform 0.33s 0.63s ease;
         }
         
         .email-icon {
@@ -249,17 +262,9 @@
             justify-content: center;
             font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
             box-shadow: 2px 5px 8px -1px rgba(0,0,0,0.4);
             text-decoration: none;
             z-index: 99;
-        }
-        .email-icon:hover {
-            transform: scale(1.1);
-            background-color: #EA4335;
-        }
-        .email-icon:active {
-            transform: scale(0.95);
         }
         .email-icon:focus {
             outline: 2px solid rgba(255, 255, 255, 0.5);
@@ -277,7 +282,6 @@
             z-index: 98;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         #menuCheckbox:checked ~ .menu-overlay {
             opacity: 1;
@@ -303,9 +307,6 @@
                 width: 180px;
                 font-size: 15px;
                 padding: 0 12px;
-            }
-            .menu-thing:hover {
-                width: 200px;
             }
         }
         
@@ -333,9 +334,6 @@
                 width: 20px;
                 height: 20px;
                 padding: 3px;
-            }
-            .menu-thing:hover {
-                width: 180px;
             }
             .menu-thing.one {
                 top: 50px;
@@ -371,9 +369,6 @@
             .menu-thing {
                 width: 140px;
                 font-size: 12px;
-            }
-            .menu-thing:hover {
-                width: 160px;
             }
             
             .menu-thing i {
