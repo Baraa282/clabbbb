@@ -381,10 +381,6 @@
   justify-content: center;
   min-width: 150px;
   min-height: 50px;
-  background-image: url('frAME.png');
-  background-size: 80% 60%;
-  background-repeat: no-repeat;
-  background-position: center;
   font-family: 'Amiri', 'Traditional Arabic', 'Arabic Typesetting', serif;
   width: fit-content;
 }
@@ -482,7 +478,7 @@ body .socials > a:hover {
   }
 }
     </style>
-    <style>
+<style>
     /* Header Styles */
     .header {
       position: fixed;
@@ -514,6 +510,42 @@ body .socials > a:hover {
     
     .header-section.left {
       justify-content: flex-start;
+    }
+    
+    .font-size-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .font-size-btn {
+      width: 36px;
+      height: 36px;
+      border: 2px solid #2AC8DD;
+      background-color: #2AC8DD;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      user-select: none;
+      padding: 0;
+      line-height: 1;
+    }
+    
+    .font-size-btn:hover {
+      background-color: #1ea8c4;
+      border-color: #1ea8c4;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    
+    .font-size-btn:active {
+      transform: scale(0.95);
     }
     
     .surah-dropdown-wrapper {
@@ -982,7 +1014,13 @@ body .socials > a:hover {
       
       .surah-name,
       .juz-text {
-        font-size: 13px;
+        font-size: 18px;
+        padding: 8px 30px 8px 12px;
+      }
+      
+      .surah-name::after {
+        font-size: 14px;
+        right: 8px;
       }
       
       .nav-controls {
@@ -1019,11 +1057,17 @@ body .socials > a:hover {
       .bismillah {
         font-size: 22px;
       }
-    }
-    </style>
+}
+</style>
 </head>
 <body>
 <header class="header">
+  <div class="header-section left">
+    <div class="font-size-controls">
+      <button id="font-decrease" class="font-size-btn" title="تصغير الخط">−</button>
+      <button id="font-increase" class="font-size-btn" title="تكبير الخط">+</button>
+    </div>
+  </div>
   <div class="header-section right">
     <div class="surah-dropdown-wrapper">
       <span class="surah-name" id="current-surah">الفاتحة</span>
@@ -1206,8 +1250,8 @@ body .socials > a:hover {
       <rect x="2" y="4" width="20" height="16" rx="2"/>
     </clipPath>
   </svg>
-  
-  <script>
+
+<script>
     let quranData = null;
     let translationData = null; // English translation data
     let isTranslationMode = false; // Track if showing translation
@@ -1718,6 +1762,13 @@ body .socials > a:hover {
       html += '</div>';
       
       container.innerHTML = html;
+      
+      // Reapply font size after content is loaded
+      if (window.applyFontSize && window.currentFontSize) {
+        setTimeout(() => {
+          window.applyFontSize(window.currentFontSize);
+        }, 0);
+      }
       
       // Add click event listeners to all ayahs
       const ayahElements = container.querySelectorAll('.quran-ayah');
@@ -2338,6 +2389,72 @@ body .socials > a:hover {
         }
       });
       
+      // Font size controls
+      window.currentFontSize = 26; // Default font size for ayah text
+      const minFontSize = 16;
+      const maxFontSize = 40;
+      const fontSizeStep = 2;
+      
+      // Make applyFontSize accessible globally
+      window.applyFontSize = function(size) {
+        // Apply to ayah text
+        const ayahTexts = document.querySelectorAll('.ayah-text');
+        ayahTexts.forEach(el => {
+          el.style.fontSize = size + 'px';
+        });
+        
+        // Apply to ayah numbers (proportional)
+        const ayahNumbers = document.querySelectorAll('.ayah-number');
+        const numberSize = Math.max(16, size * 0.7);
+        ayahNumbers.forEach(el => {
+          el.style.fontSize = numberSize + 'px';
+        });
+        
+        // Apply to bismillah (proportional)
+        const bismillahs = document.querySelectorAll('.bismillah');
+        const bismillahSize = size * 1.15;
+        bismillahs.forEach(el => {
+          el.style.fontSize = bismillahSize + 'px';
+        });
+        
+        // Apply to surah header (proportional)
+        const surahHeaders = document.querySelectorAll('.surah-header');
+        const headerSize = size * 0.77;
+        surahHeaders.forEach(el => {
+          el.style.fontSize = headerSize + 'px';
+        });
+      };
+      
+      // Load saved font size from localStorage
+      const savedFontSize = localStorage.getItem('quranFontSize');
+      if (savedFontSize) {
+        window.currentFontSize = parseInt(savedFontSize);
+        window.applyFontSize(window.currentFontSize);
+      }
+      
+      const fontIncreaseBtn = document.getElementById('font-increase');
+      const fontDecreaseBtn = document.getElementById('font-decrease');
+      
+      if (fontIncreaseBtn) {
+        fontIncreaseBtn.addEventListener('click', () => {
+          if (window.currentFontSize < maxFontSize) {
+            window.currentFontSize += fontSizeStep;
+            window.applyFontSize(window.currentFontSize);
+            localStorage.setItem('quranFontSize', window.currentFontSize);
+          }
+        });
+      }
+      
+      if (fontDecreaseBtn) {
+        fontDecreaseBtn.addEventListener('click', () => {
+          if (window.currentFontSize > minFontSize) {
+            window.currentFontSize -= fontSizeStep;
+            window.applyFontSize(window.currentFontSize);
+            localStorage.setItem('quranFontSize', window.currentFontSize);
+          }
+        });
+      }
+      
       // Book icon (tab-01) - Show Arabic text
       const bookTab = document.getElementById('tab-01');
       if (bookTab) {
@@ -2508,7 +2625,7 @@ body .socials > a:hover {
       loadQuranData();
       loadAudioChecksum();
       loadTranslation(); // Pre-load translation
-    });
-  </script>
+});
+</script>
 </body>
 </html>
